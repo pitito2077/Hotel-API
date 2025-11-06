@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+#clave de acceso
+#AKIASU5664ZT4OY3P6H4
+#clave secreta
+#FUvjCNZXTTzxlNQEVV5KEj4q27Cf8c3y8rLUBccn
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -53,9 +58,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'rest_framework_simplejwt',
-    'Usuarios'
+    'rest_framework',
+    'storages',
+    'Usuarios',
+    'Habitaciones',
 ]
 
 MIDDLEWARE = [

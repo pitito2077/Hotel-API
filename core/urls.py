@@ -19,8 +19,11 @@ from django.urls import path, include
 from Usuarios.views import index
 from rest_framework import routers
 from Usuarios.views import RegistroUsuarioView
+from Habitaciones.views import HabitacionViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+room_router = routers.DefaultRouter()
+room_router.register(r'habitaciones', HabitacionViewSet, 'habitaciones')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +32,7 @@ urlpatterns = [
     path('api/register/', RegistroUsuarioView.as_view(), name='registro'),
     path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
+    path('api/', include(room_router.urls), name='habitaciones'),
+    
 ]
