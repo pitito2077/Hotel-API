@@ -15,9 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
 from Usuarios.views import index
+from django.conf import settings
 from rest_framework import routers
+from django.urls import path, include
+from django.conf.urls.static import static
 from Usuarios.views import RegistroUsuarioView
 from Habitaciones.views import HabitacionViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -36,3 +38,5 @@ urlpatterns = [
     path('api/', include(room_router.urls), name='habitaciones'),
     
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
