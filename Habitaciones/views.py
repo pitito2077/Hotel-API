@@ -7,5 +7,6 @@ from .models import Habitacion
 class HabitacionViewSet(viewsets.ModelViewSet):
     serializer_class = HabitacionSerializer
     queryset = Habitacion.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    #cambiar despues que chambee el pendejo.
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     http_method_names = ['get']

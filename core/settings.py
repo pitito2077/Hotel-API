@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'storages',
     'Usuarios',
     'Habitaciones',
+    'Reservas',
 ]
 
 

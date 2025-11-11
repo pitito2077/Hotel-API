@@ -20,6 +20,7 @@ from django.conf import settings
 from rest_framework import routers
 from django.urls import path, include
 from django.conf.urls.static import static
+from Reservas.views import ReservaViewSet
 from Usuarios.views import RegistroUsuarioView
 from Habitaciones.views import HabitacionViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -27,16 +28,17 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 room_router = routers.DefaultRouter()
 room_router.register(r'habitaciones', HabitacionViewSet, 'habitaciones')
 
+booking_router = routers.DefaultRouter()
+booking_router.register(r'reservas', ReservaViewSet, 'reservas')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    
     path('api/register/', RegistroUsuarioView.as_view(), name='registro'),
     path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
     path('api/', include(room_router.urls), name='habitaciones'),
-    
+    path('api/', include(booking_router.urls), name='reservas'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
