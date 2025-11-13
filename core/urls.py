@@ -22,7 +22,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from Reservas.views import ReservaViewSet
 from Usuarios.views import RegistroUsuarioView
-from Habitaciones.views import HabitacionViewSet
+from Habitaciones.views import HabitacionViewSet,DetalleHabitacionView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 room_router = routers.DefaultRouter()
@@ -38,6 +38,7 @@ urlpatterns = [
     path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/', include(room_router.urls), name='habitaciones'),
+    path('api/habitaciones/habitacion/<int:id>/', DetalleHabitacionView.as_view(), name='detalle-habitacion'),
     path('api/', include(booking_router.urls), name='reservas'),
 ]
 if settings.DEBUG:
