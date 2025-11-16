@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Reserva
 from django.db.models import Q
+from datetime import date
 
 class ReservaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,7 +14,7 @@ class ReservaSerializer(serializers.ModelSerializer):
         inicio = data['fecha_inicio']
         fin = data['fecha_fin']
         
-        if fin < inicio:
+        if fin < inicio or inicio < date.today():
             raise serializers.ValidationError('Error eligiendo fechas')
         
         fechas_cruzadas = Reserva.objects.filter(Q(habitacion=habitacion) & Q(fecha_inicio__lt=fin) & Q(fecha_fin__gt=inicio))
