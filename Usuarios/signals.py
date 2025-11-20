@@ -3,13 +3,14 @@ from django.db.models.signals import post_migrate
 from django.contrib.auth.models import Group, Permission
 from django.db.models import Q
 from Habitaciones.models import Habitacion
+from Reservas.models import Reserva
 from django.dispatch import receiver
 
 @receiver(post_migrate)
 def crearRoles(sender, **kwargs):
     
     #! no mover💀
-    if sender.name != 'Usuarios':
+    if sender.label != 'Usuarios':
         return
     #TODO: checar las tareas en ms ToDo
     
@@ -19,16 +20,22 @@ def crearRoles(sender, **kwargs):
     client_group,_ = Group.objects.get_or_create(name='cliente')
     
     ct = ContentType.objects.get_for_model(Habitacion)
+    reservas_ct = ContentType.objects.get_for_model(Reserva)
     #? Permisos para recepcion
     reception_permissions = Permission.objects.filter(
         Q(codename__in=['view_habitacion', 'change_habitacion','add_habitacion', 'delete_habitacion']) &
         Q(content_type=ct)
     )
     #? Permisos para los clientes
-    client_permissions = Permission.objects.filter(
+    client_perm = Permission.objects.filter(
         Q(content_type=ct) &
         Q(codename__in=['view_habitacion', 'change_habitacion'])
     )
+    client_reservas_perm = Permission.objects.filter(
+        Q(content_type=reservas_ct) &
+        Q(codename__in=['view_reserva', 'change_reserva', 'add_reserva', 'delete_reserva'])
+    )
+    client_permissions = client_perm | client_reservas_perm
     reception_group.permissions.set(reception_permissions)
     client_group.permissions.set(client_permissions)
     
