@@ -7,4 +7,4 @@ from .models import Reserva
 class ReservaViewSet(viewsets.ModelViewSet):
     serializer_class = ReservaSerializer
     queryset = Reserva.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, permissions.DjangoModelPermissions]
