@@ -21,7 +21,7 @@ from rest_framework import routers
 from django.urls import path, include
 from django.conf.urls.static import static
 from Reservas.views import ReservaViewSet
-from Usuarios.views import RegistroUsuarioView
+from Usuarios.views import RegistroUsuarioView, RegistroUsuarioRecepcionView
 from Habitaciones.views import HabitacionViewSet,DetalleHabitacionView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -35,6 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('api/register/', RegistroUsuarioView.as_view(), name='registro'),
+    path('api/register/recepcion/', RegistroUsuarioRecepcionView.as_view(), name='registro_recepcion'),
     path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/', include(room_router.urls), name='habitaciones'),
